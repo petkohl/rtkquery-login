@@ -46,8 +46,10 @@ type Inputs = {
 function RegisterApplicant() {
   const classes = useStyles();
   const navigate = useNavigate();
-  const [addRegisterApplicant] = useAddRegisterApplicantMutation();
+  const [addRegisterApplicant, { data, isLoading }] =
+    useAddRegisterApplicantMutation();
 
+  console.log(data);
   const defaultValues = {
     username: '',
     email: '',
