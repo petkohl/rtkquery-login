@@ -1,5 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 
+import PrivateRoute from '../src/components/routing/PrivateRoute';
 import React from 'react';
 import RegisterApplicant from '../src/components/auth/RegisterApplicant';
 import { ThemeProvider } from '@mui/material/styles';
@@ -11,7 +12,14 @@ function App() {
       <ThemeProvider theme={theme}>
         <Routes>
           <Route path="/" element={<RegisterApplicant />} />
-          <Route path="/about" element={<About />} />
+          <Route
+            path="/about"
+            element={
+              <PrivateRoute>
+                <About />
+              </PrivateRoute>
+            }
+          />
         </Routes>
       </ThemeProvider>
     </div>

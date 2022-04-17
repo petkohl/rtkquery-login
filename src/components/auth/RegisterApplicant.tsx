@@ -9,7 +9,6 @@ import {
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import React from 'react';
 import makeStyles from '@mui/styles/makeStyles';
 import { useAddRegisterApplicantMutation } from '../../features/auth/authSlice';
 import { useNavigate } from 'react-router-dom';
@@ -265,6 +264,7 @@ function RegisterApplicant() {
                       type="reset"
                       onClick={() => {
                         reset(defaultValues);
+                        localStorage.clear();
                       }}
                     >
                       Reset
