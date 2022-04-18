@@ -11,27 +11,8 @@ interface RegisterApplicant {
 interface ReturnToken {
   success: string;
   token: string;
+  isAuthenticated?: boolean;
 }
-// getDepartments: builder.query({
-//   query: params => ({
-//       url: `departments`,
-//       params,
-//       // Transform and normalize API response
-//       transform: response => {
-//           console.log(response);
-//           return response;
-//       },
-//   }),
-//   transformResponse: (response) => response.some.deeply.nested.collection,
-//   providesTags: result => {
-//       return result
-//           ? [
-//                   ...result.items.map(({ id }) => ({ type: 'Department', id })),
-//                   { type: 'Department', id: 'LIST' },
-//             ]
-//           : [{ type: 'Department', id: 'LIST' }];
-//   },
-// }),
 
 export const authApi = createApi({
   reducerPath: 'api',
@@ -40,6 +21,9 @@ export const authApi = createApi({
 
     prepareHeaders: (headers, { getState }) => {
       const token = localStorage.getItem('token');
+      const state = getState();
+      console.log(state);
+
       if (token) {
         headers.set('Authorization', `Bearer ${token}`);
       }
@@ -69,7 +53,7 @@ export const authApi = createApi({
         },
       }),
       transformResponse: (rawResult: ReturnToken, meta) => {
-        let data = { ...rawResult, isAuthenticated: true };
+        let data: ReturnToken = { ...rawResult, isAuthenticated: true };
         console.log(data);
 
         return data;

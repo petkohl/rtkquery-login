@@ -9,30 +9,30 @@ import {
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import makeStyles from '@mui/styles/makeStyles';
+import { Theme } from '@mui/system';
+import { makeStyles } from '@mui/styles';
+import { skipToken } from '@reduxjs/toolkit/query/react';
 import { useAddRegisterApplicantMutation } from '../../features/auth/authSlice';
 import { useNavigate } from 'react-router-dom';
 
-const useStyles = makeStyles((theme?: any) => ({
-  paper: {
-    padding: theme.spacing(2),
-    maxWidth: '450px',
-  },
-  paperIcon: {
-    marginTop: theme.spacing(2),
-    display: 'flex',
-    flexDirection: 'column',
-    alignitems: 'center',
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.primary.main,
-  },
-  paddingTop: {
-    marginTop: theme.spacing(2),
-  },
-}));
+const useStyles = makeStyles((theme: Theme) => {
+  return {
+    paper: {
+      padding: theme.spacing(2),
+      maxWidth: '450px',
+    },
+    paperIcon: {
+      marginTop: theme.spacing(2),
+      display: 'flex',
+      flexDirection: 'column',
+      alignitems: 'center',
+    },
 
+    paddingTop: {
+      marginTop: theme.spacing(2),
+    },
+  };
+});
 type Inputs = {
   username: string;
   email: string;
@@ -45,6 +45,7 @@ type Inputs = {
 
 function RegisterApplicant() {
   const classes = useStyles();
+
   const navigate = useNavigate();
   const [addRegisterApplicant, { data, isLoading }] =
     useAddRegisterApplicantMutation();
@@ -86,6 +87,7 @@ function RegisterApplicant() {
       .unwrap()
       .then((payload) => localStorage.setItem('token', payload.token))
       .catch((error) => console.error('rejected', error));
+    navigate('/about');
   };
   return (
     <Grid
@@ -96,7 +98,7 @@ function RegisterApplicant() {
       justifyContent="center"
     >
       <Grid item xs={12} className={classes.paperIcon}>
-        <Avatar className={classes.avatar}>
+        <Avatar sx={{ backgroundColor: 'primary.main', margin: 1 }}>
           <LockOutlinedIcon />
         </Avatar>
       </Grid>
